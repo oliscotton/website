@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Landing Page — Hazard Stripes</title>
+<style>
+:root{
+  --stripe: 200px;                 /* thickness of each red/white band */
+  --hazard-red:#d90000;            /* red color */
+  --speed: .9s;                    /* hover speed */
+  --angle: 45deg;                  /* stripe angle */
+  --period: calc(var(--stripe) * 2);                 /* one red+white cycle */
+  --tileX: calc(var(--period) * 1.41421356237);      /* period / cos(45°) */
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family: Arial, sans-serif;}
+
+/* 5 equal-height rows filling the viewport */
+.wrap{display:grid;grid-template-rows:repeat(5,1fr);height:100dvh;height:100vh;}
+
+.band{position:relative;overflow:hidden;}
+
+.band::before{
+  content:"";position:absolute;inset:-50% -50%;
+  background:repeating-linear-gradient(
+    var(--angle),
+    var(--hazard-red) 0,
+    var(--hazard-red) var(--stripe),
+    #fff var(--stripe),
+    #fff calc(var(--stripe) * 2)
+  );
+  background-size: var(--tileX) var(--tileX);
+  background-position: 0 0;
+  will-change: background-position;
+  animation: scroll-left var(--speed) linear infinite;
+  animation-play-state: paused;
+  z-index:0;
+}
+
+.band:nth-child(even)::before{animation-name: scroll-right}
+.band:hover::before{animation-play-state: running}
+.band:hover .overlay-text{animation-play-state: running}
+
+@keyframes scroll-left{
+  from{background-position: 0 0}
+  to  {background-position: calc(var(--tileX) * -1) 0}
+}
+@keyframes scroll-right{
+  from{background-position: 0 0}
+  to  {background-position: var(--tileX) 0}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .band::before{animation: none}
+  .overlay-text{animation: none}
+}
+
+/* Centered overlay text */
+.overlay-text{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:#fff;
+  font-size:14pt;
+  text-align:center;
+  line-height:1.2;
+  letter-spacing: 0.5px;
+  font-family:Helvetica, Arial, sans-serif;
+  z-index:1;
+  animation: scroll-left var(--speed) linear infinite;
+  animation-play-state: paused;
+}
+
+.overlay-text a{
+  color:#fff;
+  text-decoration:none;
+}
+.overlay-text a:hover{
+  text-decoration:underline;
+}
+
+.band:nth-child(even) .overlay-text{animation-name: scroll-right}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="band"></section>
+    <section class="band"></section>
+    <section class="band">
+      <div class="overlay-text">
+        OLI SCOTTON<br>
+        Freelance Designer<br>
+        <a href="tel:+447913124429"><a href="tel:+447913124429">+44 (0)7913 124429</a></a><br>
+        <a href="mailto:oliscotton@gmail.com">oliscotton@gmail.com</a>
+      </div>
+    </section>
+    <section class="band"></section>
+    <section class="band"></section>
+  </main>
+</body>
+</html>
