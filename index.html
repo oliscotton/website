@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Oli Scotton — Freelance Designer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>My Landing Page — Hazard Stripes</title>
 <style>
 :root{
   --stripe: 200px;                 /* thickness of each red/white band */
@@ -16,10 +16,10 @@
 
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{font-family: Arial, sans-serif;}
+body{font-family: Arial, sans-serif; overflow:hidden;}
 
 /* 5 equal-height rows filling the viewport */
-.wrap{display:grid;grid-template-rows:repeat(5,1fr);height:100dvh;height:100vh;}
+.wrap{display:grid;grid-template-rows:repeat(5,1fr);height:100svh;position:relative;overflow:hidden;}
 
 .band{position:relative;overflow:hidden;cursor:pointer;}
 
@@ -73,7 +73,7 @@ body{font-family: Arial, sans-serif;}
   text-align:center;
   line-height:1.2;
   letter-spacing: 0.5px;
-  font-family: Arial, sans-serif;
+  font-family:Helvetica, Arial, sans-serif;
   z-index:1;
   animation: scroll-left var(--speed) linear infinite;
   animation-play-state: paused;
