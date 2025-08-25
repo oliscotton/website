@@ -38,6 +38,7 @@ body{font-family: Arial, sans-serif; overflow:hidden;}
   );
   background-size: var(--tileX) var(--tileX);
   background-position: 0 0;
+  background-attachment: fixed; /* align pattern to the viewport so seams match across rows */
   will-change: background-position;
   animation: scroll-left var(--speed) linear infinite;
   animation-play-state: paused;
