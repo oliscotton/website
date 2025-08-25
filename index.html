@@ -1,10 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" href="oli-scotton-favicon.png">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Oli Scotton — Freelance Designer</title>
+<title>My Landing Page — Hazard Stripes</title>
 <style>
 :root{
   --stripe: 200px;                 /* thickness of each red/white band */
@@ -22,16 +21,20 @@ body{font-family: Arial, sans-serif;}
 /* 5 equal-height rows filling the viewport */
 .wrap{display:grid;grid-template-rows:repeat(5,1fr);height:100dvh;height:100vh;}
 
-.band{position:relative;overflow:hidden;}
+.band{position:relative;overflow:hidden;cursor:pointer;}
+
+/* Per-row color variables: default red/white, alt switches to black/yellow */
+.band{ --stripe-a: var(--hazard-red); --stripe-b: #fff; }
+.band.alt{ --stripe-a: #000; --stripe-b: #ffd400; }
 
 .band::before{
   content:"";position:absolute;inset:-50% -50%;
   background:repeating-linear-gradient(
     var(--angle),
-    var(--hazard-red) 0,
-    var(--hazard-red) var(--stripe),
-    #fff var(--stripe),
-    #fff calc(var(--stripe) * 2)
+    var(--stripe-a) 0,
+    var(--stripe-a) var(--stripe),
+    var(--stripe-b) var(--stripe),
+    var(--stripe-b) calc(var(--stripe) * 2)
   );
   background-size: var(--tileX) var(--tileX);
   background-position: 0 0;
@@ -65,7 +68,7 @@ body{font-family: Arial, sans-serif;}
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  color:#fff;
+  color:#fff; /* default white */
   font-size:14pt;
   text-align:center;
   line-height:1.2;
@@ -76,31 +79,39 @@ body{font-family: Arial, sans-serif;}
   animation-play-state: paused;
 }
 
-.overlay-text a{
-  color:#fff;
-  text-decoration:none;
-}
-.overlay-text a:hover{
-  text-decoration:underline;
-}
-
+/* When the middle row is toggled, make the text black to match black/yellow */
+.band.middle.alt .overlay-text{ color:#000; }
 .band:nth-child(even) .overlay-text{animation-name: scroll-right}
+
+/* Links styling */
+.overlay-text a{ color: inherit; text-decoration:none; }
+.overlay-text a:hover{ text-decoration:underline; }
 </style>
 </head>
 <body>
   <main class="wrap">
     <section class="band"></section>
     <section class="band"></section>
-    <section class="band">
+    <section class="band middle">
       <div class="overlay-text">
         OLI SCOTTON<br>
         Freelance Designer<br>
-        <a href="tel:+447913124429"><a href="tel:+447913124429">+44 (0)7913 124429</a></a><br>
+        <a href="tel:+447913124429">+44 (0)7913 124429</a><br>
         <a href="mailto:oliscotton@gmail.com">oliscotton@gmail.com</a>
       </div>
     </section>
     <section class="band"></section>
     <section class="band"></section>
   </main>
+  <script>
+    // Toggle color scheme per row on click. Middle row also flips text to black via CSS.
+    document.querySelectorAll('.band').forEach(band => {
+      band.addEventListener('click', (e) => {
+        // Let real link clicks behave normally
+        if (e.target.closest('a')) return;
+        band.classList.toggle('alt');
+      });
+    });
+  </script>
 </body>
 </html>
